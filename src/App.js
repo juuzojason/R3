@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import RegisterModal from './components/Login/RegisterModal';
 import FaqSection from './components/FAQ/FAQSection';
 import BottomNavbar from './components/BNB/bottomNavBar';
 import LoginModal from './components/Login/LoginModal';
@@ -93,8 +94,11 @@ const Reseñas = () => (
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); 
+
 
   return (
+    
     <div className="App">
       {/* Navigation Bar */}
       <nav className="navbar">
@@ -109,7 +113,14 @@ function App() {
           >
             Iniciar Sesion
           </button>
-          <button className="btn-join">Unirse</button>
+
+          <button 
+          className="btn-join" 
+          onClick={() => setIsRegisterModalOpen(true)}
+          >
+            Unirse
+            </button>
+
         </div>
       </nav>
 
@@ -118,8 +129,14 @@ function App() {
         isOpen={isLoginModalOpen} 
         onClose={() => setIsLoginModalOpen(false)}
       />
+
+      <RegisterModal 
+        isOpen={isRegisterModalOpen} 
+        onClose={() => setIsRegisterModalOpen(false)}
+      />
       
-      {/* Main content of the page */}
+      
+      
       <main className="main-content">
         
         <div className="premium-services">
@@ -137,8 +154,7 @@ function App() {
           </div>
         </div>
 
-        {/* Sección Aliados Actualizada */}
-        {/* Sección Aliados Mejorada */}
+        
 <div className="opciones-aliados px-6 py-10">
   <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
     <h2 className="h2">Aliados</h2>

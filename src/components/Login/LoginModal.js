@@ -15,8 +15,8 @@ const LoginModal = ({ isOpen, onClose }) => {
       <div className={styles.modalOverlay} onClick={handleOverlayClick}>
         <div className={styles.modal}>
           <h1>
-            <span className={styles.brandPrime}>PRIME</span>
-            <span className={styles.brandTesting}> TESTING</span>
+            <span className={styles.brandPrime}>Bienvenidos a </span>
+            <span className={styles.brandTesting}>R3</span>
           </h1>
           <form>
             <div className={styles.inputGroup}>
