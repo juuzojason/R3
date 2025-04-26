@@ -1,0 +1,128 @@
+
+/* Estilos para la sección FAQ - Diseño Figma */
+.faq-section {
+    padding: 40px;
+    background-color: #F7F7F5;
+  }
+  
+  .faq-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .faq-header {
+    color: #ed512e;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .faq-header h1 {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+  
+  .help-card {
+    background-color: #EAEAEA;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .help-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .help-card p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .help-link-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .help-link {
+    color: #FF5731;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .arrow-icon {
+    color: #FF5731;
+    font-size: 24px;
+  }
+  
+  .faq-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid #E5E5E5;
+  }
+  
+  .faq-button {
+    font-family: 'Koulen', sans-serif;
+    font-size: 18px;
+    color: #FFFFFF; /* <-- Cambiar a blanco */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+  .faq-button:hover {
+    color: #FF5731;
+  }
+  
+  .arrow {
+    color: #FF5731;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .arrow.up {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 0 20px;
+    color: #666;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .faq-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .faq-header h1 {
+      font-size: 36px;
+    }
+    
+    .help-card {
+      margin-bottom: 40px;
+    }
+  }
