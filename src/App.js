@@ -155,10 +155,12 @@ function App() {
         </div>
 
         
-<div className="opciones-aliados px-6 py-10">
+        <div className="opciones-aliados px-6 py-10">
   <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
-    <h2 className="h2">Aliados</h2>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center">
+    <div className="header-flex">
+      <h2 className="h2">Aliados</h2>
+    </div>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center aliados-grid">
       <div className="aliado-card">
         <img src="/assets/images/aliado1.jpg" alt="aliado1" className="aliado-img" />
       </div>
@@ -180,6 +182,7 @@ function App() {
     </div>
   </div>
 </div>
+
 
         {/* NUEVAS SECCIONES */}
         <Podras />

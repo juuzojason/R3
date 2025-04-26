@@ -1,4 +1,4 @@
-/* Navbar styling */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,14 @@
   gap: 10px;
 }
 
-/* Agrega estas clases en tu App.css */
+.App {
+  background: 
+    linear-gradient(rgba(26, 18, 48, 0.7), rgba(255, 255, 255, 0.7));
+  min-height: 100vh; /* Para que cubra todo el alto de la pantalla */
+  width: 100%;
+}
+
+
 
 .brand-Unete {
   color: #FF5731;
@@ -103,26 +110,6 @@ main {
 }
 
 
-.aliados-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 10px;
-  max-width: 100%; 
-}
-
-
-.aliados-container img {
-  max-width: 150px;  
-  max-height: 160px; 
-  width: 100%;  
-  border-radius: 20%;
-  height: auto;  
-  object-fit: contain;  
-  margin-top: 10px;
-}
-
 .main-content {
   padding: 80px;
   margin: 0 auto;
@@ -134,6 +121,7 @@ main {
   align-items: center;
   margin-bottom: 40px;
 }
+
 
 .text-content {
   flex: 1;
@@ -153,7 +141,18 @@ main {
   color: #666;
   margin-bottom: 20px;
 }
-/* Estilo general del contenedor de aliados */
+
+.aliados-container-custom h2 {
+  text-align: center;
+  margin: 0;
+}
+.aliados-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+
 .aliados-container-custom {
   background-color: #1A1230;
   padding: 2rem;
@@ -161,10 +160,18 @@ main {
   box-shadow: 0 0 20px 2px rgba(176, 70, 255, 0.6);
 }
 
+.header-flex {
+  display: flex;
+  justify-content: flex-start; /* Alinea el título a la izquierda */
+  margin-bottom: 20px; /* Separación entre título y los aliados */
+}
+
+
 .h2{
   font-size: 32px;
   color: #ffffff;
 }
+
 .aliado-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: transparent;
@@ -175,7 +182,7 @@ main {
 
 .aliado-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 8px 16px rgba(176, 70, 255, 0.4);
+  box-shadow: 0 8px 16px rgba(168, 61, 250, 0.4);
 }
 
 
