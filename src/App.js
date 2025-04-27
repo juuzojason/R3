@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Products from './components/Products/Products';
 import RegisterModal from './components/Login/RegisterModal';
 import FaqSection from './components/FAQ/FAQSection';
 import BottomNavbar from './components/BNB/bottomNavBar';
@@ -92,109 +94,110 @@ const Reseñas = () => (
   </div>
 );
 
+
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); 
-
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   return (
-    
-    <div className="App">
-      {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="navbar-brand">
-          <span className="brand-R3">Unete a </span> 
-          <span className="brand-Unete">R3</span>
-        </div>
-        <div className="navbar-buttons">
-          <button 
-            className="btn-login" 
-            onClick={() => setIsLoginModalOpen(true)}
-          >
-            Iniciar Sesion
-          </button>
-
-          <button 
-          className="btn-join" 
-          onClick={() => setIsRegisterModalOpen(true)}
-          >
-            Unirse
+    <Router>
+      <div className="App">
+        {/* Navigation Bar */}
+        <nav className="navbar">
+          <div className="navbar-brand">
+            <span className="brand-R3">Unete a </span> 
+            <span className="brand-Unete">R3</span>
+          </div>
+          <div className="navbar-buttons">
+            <button 
+              className="btn-login" 
+              onClick={() => setIsLoginModalOpen(true)}
+            >
+              Iniciar Sesion
             </button>
-
-        </div>
-      </nav>
-
-      {/* Login Modal */}
-      <LoginModal 
-        isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)}
-      />
-
-      <RegisterModal 
-        isOpen={isRegisterModalOpen} 
-        onClose={() => setIsRegisterModalOpen(false)}
-      />
-      
-      
-      
-      <main className="main-content">
-        
-        <div className="premium-services">
-          <div className="text-content">
-            <h1>
-              ENCARGATE DE <span className="premium">VENDER O DONAR</span> LO QUE NO VAS A USAR
-            </h1>
-            <p className="descripcion-home">
-              Dale una segunda vida a todos los productos que crees que no servirán más.
-            </p>
-            <button className="btn-join-2">UNIRSE</button>
+            <button 
+              className="btn-join" 
+              onClick={() => setIsRegisterModalOpen(true)}
+            >
+              Unirse
+            </button>
           </div>
-          <div className="image-content">
-            <img src="/assets/images/fondo.png" alt="App Screenshots" className="app-image" />
-          </div>
-        </div>
+        </nav>
 
-        
-        <div className="opciones-aliados px-6 py-10">
-  <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
-    <div className="header-flex">
-      <h2 className="h2">Aliados</h2>
-    </div>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center aliados-grid">
-      <div className="aliado-card">
-        <img src="/assets/images/aliado1.jpg" alt="aliado1" className="aliado-img" />
-      </div>
-      <div className="aliado-card">
-        <img src="/assets/images/aliado2.jpg" alt="aliado2" className="aliado-img" />
-      </div>
-      <div className="aliado-card">
-        <img src="/assets/images/aliado3.jpg" alt="aliado3" className="aliado-img" />
-      </div>
-      <div className="aliado-card">
-        <img src="/assets/images/aliado4.png" alt="aliado4" className="aliado-img" />
-      </div>
-      <div className="aliado-card">
-        <img src="/assets/images/aliado5.webp" alt="aliado5" className="aliado-img" />
-      </div>
-      <div className="aliado-card">
-        <img src="/assets/images/aliado6.jpg" alt="aliado6" className="aliado-img" />
-      </div>
-    </div>
-  </div>
-</div>
+        {/* Login and Register Modals */}
+        <LoginModal 
+          isOpen={isLoginModalOpen} 
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+        <RegisterModal 
+          isOpen={isRegisterModalOpen} 
+          onClose={() => setIsRegisterModalOpen(false)}
+        />
 
+        {/* Define the Routes */}
+        <Routes>
+          <Route path="/" element={
+            <main className="main-content">
+              {/* Sección principal */}
+              <div className="premium-services">
+                <div className="text-content">
+                  <h1>
+                    ENCARGATE DE <span className="premium">VENDER O DONAR</span> LO QUE NO VAS A USAR
+                  </h1>
+                  <p className="descripcion-home">
+                    Dale una segunda vida a todos los productos que crees que no servirán más.
+                  </p>
+                  <button className="btn-join-2">UNIRSE</button>
+                </div>
+                <div className="image-content">
+                  <img src="/assets/images/fondo.png" alt="App Screenshots" className="app-image" />
+                </div>
+              </div>
 
-        {/* NUEVAS SECCIONES */}
-        <Podras />
-        <Reseñas />
+              {/* Aliados */}
+              <div className="opciones-aliados px-6 py-10">
+                <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
+                  <div className="header-flex">
+                    <h2 className="h2">Aliados</h2>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center aliados-grid">
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado1.jpg" alt="aliado1" className="aliado-img" />
+                    </div>
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado2.jpg" alt="aliado2" className="aliado-img" />
+                    </div>
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado3.jpg" alt="aliado3" className="aliado-img" />
+                    </div>
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado4.png" alt="aliado4" className="aliado-img" />
+                    </div>
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado5.webp" alt="aliado5" className="aliado-img" />
+                    </div>
+                    <div className="aliado-card">
+                      <img src="/assets/images/aliado6.jpg" alt="aliado6" className="aliado-img" />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-        {/* FAQ */}
-        <FaqSection />
-      </main>
+              {/* Otras secciones */}
+              <Podras />
+              <Reseñas />
+              <FaqSection />
+            </main>
+          } />
+          {
+          <Route path="/productos" element={<Products />} />
+          }
+        </Routes>
 
-      {/* Bottom Navigation Bar */}
-      <BottomNavbar />
-    </div>
+        {/* Bottom Navigation Bar */}
+        <BottomNavbar />
+      </div>
+    </Router>
   );
 }
 

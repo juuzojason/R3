@@ -18,13 +18,6 @@
   gap: 10px;
 }
 
-.App {
-  background: 
-    linear-gradient(rgba(26, 18, 48, 0.7), rgba(255, 255, 255, 0.7));
-  min-height: 100vh; /* Para que cubra todo el alto de la pantalla */
-  width: 100%;
-}
-
 
 
 .brand-Unete {
@@ -143,7 +136,6 @@ main {
 }
 
 .aliados-container-custom h2 {
-  text-align: center;
   margin: 0;
 }
 .aliados-grid {
@@ -162,8 +154,8 @@ main {
 
 .header-flex {
   display: flex;
-  justify-content: flex-start; /* Alinea el título a la izquierda */
-  margin-bottom: 20px; /* Separación entre título y los aliados */
+  justify-content: flex-start; 
+  margin-bottom: 20px;
 }
 
 
@@ -292,5 +284,3 @@ main {
   color: #555;
 }
 
-
-/* Existing styles for opciones-aliados section */
