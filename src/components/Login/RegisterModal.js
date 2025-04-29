@@ -31,6 +31,15 @@ const RegisterModal = ({ isOpen, onClose }) => {
               <label>USUARIO</label>
               <input type="text" placeholder="Crear nombre de usuario..." required />
             </div>
+            
+            <div className={styles.inputGroup}>
+              <label>Direccion</label>
+              <input type="direcc" placeholder="Ingresar direccion" required />
+            </div>
+            <div className={styles.inputGroup}>
+              <label>Telefono</label>
+              <input type="tel" placeholder="Ingresar numero de celular" required />
+            </div>
             <div className={styles.inputGroup}>
               <label>CONTRASEÑA</label>
               <input type="password" placeholder="Crear contrasena..." required />

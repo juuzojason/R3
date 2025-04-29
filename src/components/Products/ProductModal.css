@@ -1,0 +1,95 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    width: 80%;
+    max-width: 900px;
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .modal-left img {
+    width: 250px;
+    border-radius: 10px;
+  }
+  
+  .modal-right {
+    flex: 1;
+  }
+  
+  .tag {
+    background: #13f129;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-family: 'Times New Roman', Times, serif;
+    display: inline-block;
+    margin: 0.5rem 0;
+  }
+
+  .tagestado {
+    background: #838583;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0.5rem 0;
+  }
+  
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .selectors {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .selectors label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .action-btn {
+    padding: 10px 20px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  .filters ul.compact-list li {
+    margin: 4px 0;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .filters ul.compact-list li:hover {
+    color: #333;
+    font-weight: bold;
+  }

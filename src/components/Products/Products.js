@@ -1,16 +1,60 @@
 import React, { useState, useEffect } from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import './Products.css';
-
+import ProductModal from './ProductModal';
 
 const Products = () => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [priceRange, setPriceRange] = useState([0, 1000000]);
 
   const products = [
-    { id: 1, category: 'Ropa', name: 'Buzo Azul', price: '$35.000', image: 'https://th.bing.com/th/id/OIP._e6RKSC1t79wgvAjhJeLvgAAAA?rs=1&pid=ImgDetMain' },
-    { id: 2, category: 'Animales', name: 'Perrito', price: 'GRATIS', image: 'https://th.bing.com/th/id/OIP.k6XwmsZC74RsZpgSu4U8vAHaIx?rs=1&pid=ImgDetMain' },
-    { id: 3, category: 'Electrodomesticos', name: 'Licuadora', price: '$355.000', image: 'https://th.bing.com/th/id/R.13f85b1e425c793cfe5688e27de879cb?rik=0Uw9A9O9deYTJg&riu=http%3a%2f%2fsalpimenta.com.ar%2fwp-content%2fuploads%2f2014%2f12%2fLicuadora-Color-Oster-alta-2.jpg&ehk=BKPxg93u65Lv72OxSp7XZPhwcJfUszP2QW46PCwDzH8%3d&risl=&pid=ImgRaw&r=0' },
-    { id: 4, category: 'Celulares', name: 'Iphone X', price: '$832.000', image: 'https://i.blogs.es/b1cb6d/iphone_x/1366_2000.png' },
+    { 
+      id: 1, 
+      category: 'Ropa', 
+      name: 'Buzo Azul', 
+      price: 35000, 
+      image: 'https://th.bing.com/th/id/OIP._e6RKSC1t79wgvAjhJeLvgAAAA?rs=1&pid=ImgDetMain', 
+      description: 'Un buzo azul cómodo y abrigado.',
+      estado: 'Usado',
+      serie: '2',
+      longDescription: 'Buzo de alta calidad, ideal para climas fríos, hecho de algodón grueso.'
+    },
+    { 
+      id: 2, 
+      category: 'Animales', 
+      name: 'Perrito', 
+      price: 0, 
+      image: 'https://th.bing.com/th/id/OIP.k6XwmsZC74RsZpgSu4U8vAHaIx?rs=1&pid=ImgDetMain', 
+      description: 'Adopta un perrito.',
+      estado: 'Nuevo',
+      serie: '1',
+      longDescription: 'Hermoso perrito en adopción, vacunado y desparasitado, listo para un nuevo hogar.'
+    },
+    { 
+      id: 3, 
+      category: 'Electrodomesticos', 
+      name: 'Licuadora', 
+      price: 355000, 
+      image: 'https://salpimenta.com.ar/wp-content/uploads/2014/12/Licuadora-Color-Oster-alta-2.jpg', 
+      description: 'Licuadora potente Oster de múltiples velocidades.',
+      estado: 'Nuevo',
+      serie: '3',
+      longDescription: 'Licuadora Oster con 8 velocidades, motor de alto rendimiento para todo tipo de preparaciones.'
+    },
+    { 
+      id: 4, 
+      category: 'Celulares', 
+      name: 'Iphone X', 
+      price: 832000, 
+      image: 'https://i.blogs.es/b1cb6d/iphone_x/1366_2000.png', 
+      description: 'iPhone X en excelente estado.',
+      estado: 'Usado',
+      serie: '2',
+      longDescription: 'iPhone X de 64GB en perfecto funcionamiento, batería al 85%, incluye caja y accesorios originales.'
+    },
   ];
 
   const carouselImages = [
@@ -18,10 +62,16 @@ const Products = () => {
     '/assets/images/donaton.jpg',
     '/assets/images/donatt.jpg'
   ];
-  
 
-  const filteredProducts = selectedCategory === 'Todos'? products
-    : products.filter(product => product.category === selectedCategory);
+  const handlePriceChange = (value) => {
+    setPriceRange(value);
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const matchCategory = selectedCategory === 'Todos' || product.category === selectedCategory;
+    const matchPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+    return matchCategory && matchPrice;
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,18 +85,35 @@ const Products = () => {
       <aside className="filters">
         <h3>Categorías</h3>
         <ul>
-          <li onClick={() => setSelectedCategory('Todos')}>Todos</li>
-          <li onClick={() => setSelectedCategory('Juguetes')}>Juguetes</li>
-          <li onClick={() => setSelectedCategory('Electrodomesticos')}>Electrodomésticos</li>
-          <li onClick={() => setSelectedCategory('Ropa')}>Ropa</li>
-          <li onClick={() => setSelectedCategory('Sacos de comida')}>Sacos de comida</li>
-          <li onClick={() => setSelectedCategory('Animales')}>Animales</li>
-          <li onClick={() => setSelectedCategory('Jaulas')}>Jaulas</li>
-          <li onClick={() => setSelectedCategory('Celulares')}>Celulares</li>
-          <li onClick={() => setSelectedCategory('Platos')}>Platos</li>
-          <li onClick={() => setSelectedCategory('Peceras')}>Peceras</li>
-          <li onClick={() => setSelectedCategory('Colchones')}>Colchones</li>
+          {['Todos',
+          'Juguetes',
+          'Electrodomesticos',
+          'Ropa',
+          'Sacos de comida',
+          'Animales',
+          'Jaulas',
+          'Celulares',
+          'Platos'].map((cat) => (
+            <li key={cat} onClick={() => setSelectedCategory(cat)}>{cat}</li>
+          ))}
         </ul>
+
+        <h3>Precio</h3>
+        <div style={{ margin: '20px 10px' }}>
+          <Slider
+            range
+            min={0}
+            max={1000000}
+            step={10000}
+            defaultValue={priceRange}
+            onChange={handlePriceChange}
+            trackStyle={[{ backgroundColor: '#333' }]}
+            handleStyle={[{ borderColor: '#333' }, { borderColor: '#333' }]}
+          />
+          <p style={{ marginTop: '10px' }}>
+            ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
+          </p>
+        </div>
       </aside>
 
       <main className="product-list">
@@ -60,11 +127,11 @@ const Products = () => {
 
         <div className="products-grid">
           {filteredProducts.map((product) => (
-            <div className="product-card" key={product.id}>
+            <div className="product-card" key={product.id} onClick={() => setSelectedProduct(product)}>
               <img src={product.image} alt={product.name} />
-              <span className="tag">{product.price === 'GRATIS' ? 'Donación' : 'Venta'}</span>
+              <span className="tag">{product.price === 0 ? 'Donación' : 'Venta'}</span>
               <h4>{product.name}</h4>
-              <p>{product.price}</p>
+              <p>{product.price === 0 ? 'GRATIS' : `$${product.price.toLocaleString()}`}</p>
             </div>
           ))}
         </div>
@@ -75,6 +142,14 @@ const Products = () => {
           <button>Siguiente</button>
         </div>
       </main>
+
+      {/* Modal aquí */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };
