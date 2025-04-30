@@ -1,20 +1,49 @@
 import React from 'react';
 import './ProductModal.css';
 
-const ProductModal = ({ product, onClose, onSubmit, setNewProduct }) => {
+const ProductModal = ({ product, onClose, setNewProduct }) => {
   if (!product) return null;
 
-  const esModoCrear = !!onSubmit && !!setNewProduct;
+  const esModoCrear = !!setNewProduct;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit();
-    onClose();
+
+    const data = {
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      description: product.description,
+      estado: product.estado,
+      serie: product.serie,
+      category: product.category,
+      longDescription: product.longDescription
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/articulos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Producto agregado correctamente');
+        onClose();
+      } else {
+        alert('Error al agregar producto: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Error al enviar datos:', error);
+      alert('Error de conexión con el servidor.');
+    }
   };
 
   return (
