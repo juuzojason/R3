@@ -9,10 +9,21 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [products, setProducts] = useState([]);
+  const [newProduct, setNewProduct] = useState({
+    name: '',
+    price: 0,
+    image: '',
+    description: '',
+    estado: '',
+    serie: '',
+    category: 'Ropa',
+    longDescription: ''
+  });
 
-  const products = [
-    { 
-      id: 1, 
+  // Productos predeterminados
+  const defaultProducts = [
+    { id: 1, 
       category: 'Ropa', 
       name: 'Buzo Azul', 
       price: 35000, 
@@ -57,21 +68,47 @@ const Products = () => {
     },
   ];
 
+  const handlePriceChange = (value) => {
+    setPriceRange(value);
+  };
+
+  const handleAddProduct = () => {
+    const updatedProducts = [...products, { ...newProduct, id: Date.now() }];
+    setProducts(updatedProducts);
+    localStorage.setItem('products', JSON.stringify(updatedProducts)); // Guardamos en el localStorage
+    setNewProduct({
+      name: '',
+      price: 0,
+      image: '',
+      description: '',
+      estado: '',
+      serie: '',
+      category: 'Ropa',
+      longDescription: ''
+    });
+  };
+
+  const handleDeleteProduct = (id) => {
+    // Filtramos los productos para excluir el producto con el id especificado
+    const updatedProducts = products.filter((product) => product.id !== id);
+    setProducts(updatedProducts);
+    localStorage.setItem('products', JSON.stringify(updatedProducts)); // Actualizamos el localStorage
+  };
+
   const carouselImages = [
     '/assets/images/Donaton.jpeg',
     '/assets/images/donaton.jpg',
     '/assets/images/donatt.jpg'
   ];
 
-  const handlePriceChange = (value) => {
-    setPriceRange(value);
-  };
+  useEffect(() => {
+    // Borrar cualquier producto guardado en el localStorage
+    localStorage.removeItem('products');
 
-  const filteredProducts = products.filter((product) => {
-    const matchCategory = selectedCategory === 'Todos' || product.category === selectedCategory;
-    const matchPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-    return matchCategory && matchPrice;
-  });
+    // Cargar solo los productos predeterminados
+    setProducts(defaultProducts);
+    localStorage.setItem('products', JSON.stringify(defaultProducts)); // Guardamos los productos predeterminados en el localStorage
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -80,20 +117,22 @@ const Products = () => {
     return () => clearInterval(interval);
   }, [carouselImages.length]);
 
+  const filteredProducts = products.filter((product) => {
+    const matchCategory = selectedCategory === 'Todos' || product.category === selectedCategory;
+    const matchPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+    return matchCategory && matchPrice;
+  });
+
   return (
     <div className="products-page">
+      {/* Botón para subir producto */}
+      <button onClick={() => setSelectedProduct('new')}>Subir Producto</button>
+
+      {/* Filtros de productos */}
       <aside className="filters">
         <h3>Categorías</h3>
         <ul>
-          {['Todos',
-          'Juguetes',
-          'Electrodomesticos',
-          'Ropa',
-          'Sacos de comida',
-          'Animales',
-          'Jaulas',
-          'Celulares',
-          'Platos'].map((cat) => (
+          {['Todos', 'Juguetes', 'Electrodomesticos', 'Ropa', 'Sacos de comida', 'Animales', 'Jaulas', 'Celulares', 'Platos'].map((cat) => (
             <li key={cat} onClick={() => setSelectedCategory(cat)}>{cat}</li>
           ))}
         </ul>
@@ -110,12 +149,11 @@ const Products = () => {
             trackStyle={[{ backgroundColor: '#333' }]}
             handleStyle={[{ borderColor: '#333' }, { borderColor: '#333' }]}
           />
-          <p style={{ marginTop: '10px' }}>
-            ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
-          </p>
+          <p style={{ marginTop: '10px' }}>${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}</p>
         </div>
       </aside>
 
+      {/* Listado de productos */}
       <main className="product-list">
         <div className="search-bar">
           <input type="text" placeholder="Buscar..." />
@@ -127,11 +165,13 @@ const Products = () => {
 
         <div className="products-grid">
           {filteredProducts.map((product) => (
-            <div className="product-card" key={product.id} onClick={() => setSelectedProduct(product)}>
+            <div className="product-card" key={product.id}>
               <img src={product.image} alt={product.name} />
               <span className="tag">{product.price === 0 ? 'Donación' : 'Venta'}</span>
               <h4>{product.name}</h4>
               <p>{product.price === 0 ? 'GRATIS' : `$${product.price.toLocaleString()}`}</p>
+              {/* Botón para eliminar producto */}
+              <button onClick={() => handleDeleteProduct(product.id)} className="delete-btn">Eliminar</button>
             </div>
           ))}
         </div>
@@ -143,8 +183,18 @@ const Products = () => {
         </div>
       </main>
 
-      {/* Modal aquí */}
-      {selectedProduct && (
+      {/* Modal para agregar producto */}
+      {selectedProduct === 'new' && (
+        <ProductModal
+          product={newProduct}
+          onClose={() => setSelectedProduct(null)}
+          onSubmit={handleAddProduct}
+          setNewProduct={setNewProduct}
+        />
+      )}
+
+      {/* Modal para ver detalles de producto */}
+      {selectedProduct && selectedProduct !== 'new' && (
         <ProductModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}

@@ -146,15 +146,6 @@
     font-size: 0.8rem;
     border-radius: 4px;
   }
-  .filters ul.compact-list li {
-    margin: 4px 0;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
   
-  .filters ul.compact-list li:hover {
-    color: #333;
-    font-weight: bold;
-  }
   
   

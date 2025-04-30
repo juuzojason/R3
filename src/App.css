@@ -284,3 +284,9 @@ main {
   color: #555;
 }
 
+.brand-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+}

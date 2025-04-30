@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route ,Link} from 'react-router-dom';
 import Products from './components/Products/Products';
+import Foros from './components/Foros/Foros';
 import RegisterModal from './components/Login/RegisterModal';
 import FaqSection from './components/FAQ/FAQSection';
 import BottomNavbar from './components/BNB/bottomNavBar';
@@ -10,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { FaShoppingCart, FaExchangeAlt, FaDonate, FaSearch, FaShareAlt } from 'react-icons/fa';
 
-// 🔹 COMPONENTE: Podrás
+
 const Podras = () => (
   
   <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
@@ -40,7 +41,6 @@ const Podras = () => (
   </div>
 );
 
-// 🔹 COMPONENTE: Reseñas
 const Reseñas = () => (
   <div className="reviews-section">
      <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
@@ -102,13 +102,18 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navigation Bar */}
         <nav className="navbar">
-          <div className="navbar-brand">
-            <span className="brand-R3">Unete a </span> 
-            <span className="brand-Unete">R3</span>
-          </div>
+        <div className="navbar-brand">
+          <Link to="/" className="brand-link">
+          <span className="brand-R3">Unete a R</span>
+          <span className="brand-Unete">3</span>
+          </Link>
+        </div>
           <div className="navbar-buttons">
+          <Link to="/foros" className="btn-foros">
+            Foros
+          </Link>
+
             <button 
               className="btn-login" 
               onClick={() => setIsLoginModalOpen(true)}
@@ -124,7 +129,6 @@ function App() {
           </div>
         </nav>
 
-        {/* Login and Register Modals */}
         <LoginModal 
           isOpen={isLoginModalOpen} 
           onClose={() => setIsLoginModalOpen(false)}
@@ -134,11 +138,9 @@ function App() {
           onClose={() => setIsRegisterModalOpen(false)}
         />
 
-        {/* Define the Routes */}
         <Routes>
           <Route path="/" element={
             <main className="main-content">
-              {/* Sección principal */}
               <div className="premium-services">
                 <div className="text-content">
                   <h1>
@@ -154,7 +156,6 @@ function App() {
                 </div>
               </div>
 
-              {/* Aliados */}
               <div className="opciones-aliados px-6 py-10">
                 <div className="aliados-container-custom rounded-3xl p-8 bg-[#1A1230] shadow-[0_0_20px_2px_rgba(176,70,255,0.6)]">
                   <div className="header-flex">
@@ -183,7 +184,6 @@ function App() {
                 </div>
               </div>
 
-              {/* Otras secciones */}
               <Podras />
               <Reseñas />
               <FaqSection />
@@ -192,9 +192,10 @@ function App() {
           {
           <Route path="/productos" element={<Products />} />
           }
+          <Route path="/foros" element={<Foros />} />
+
         </Routes>
 
-        {/* Bottom Navigation Bar */}
         <BottomNavbar />
       </div>
     </Router>
