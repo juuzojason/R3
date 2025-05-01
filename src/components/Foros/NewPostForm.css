@@ -1,0 +1,43 @@
+.new-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .new-post-form input,
+  .new-post-form textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  .new-post-form input[type="text"].image-url {
+    border: 1px solid #8b5cf6; /* púrpura suave */
+    background-color: #f9f5ff;
+    font-style: italic;
+  }
+  
+  
+  .new-post-form button {
+    padding: 10px;
+    background: #4c1d95;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .toggle-form-btn {
+    background-color: #4c1d95;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  

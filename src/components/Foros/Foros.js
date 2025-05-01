@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Foros.css';
+import NewPostForm from './NewPostForm';
 
 
 const topicsData = [
@@ -66,6 +67,13 @@ const topicsData = [
 ];
 
 const Foros = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [posts, setPosts] = useState([]); // solo si aún no se tiene
+  const handleNewPost = (post) => {
+    setPosts([post, ...posts]);
+    setShowForm(false);
+  };
+
   const [search, setSearch] = useState('');
 
   const filteredTopics = topicsData.filter(topic =>
@@ -73,6 +81,7 @@ const Foros = () => {
   );
 
   return (
+
     <div className="forum-container">
       <div className="forum-header">
         <input
@@ -83,17 +92,39 @@ const Foros = () => {
         />
         <span className="search-icon">🔍</span>
       </div>
+      <div className="new-post-controls">
+        <button className="toggle-form-btn" onClick={() => setShowForm(!showForm)}>
+          {showForm ? 'Cancelar' : 'Crear nueva publicación'}
+        </button>
+
+        {showForm && <NewPostForm onSubmit={handleNewPost} />}
+      </div>
 
       <div className="forum-grid">
+        {posts.map((post) => (
+  <div key={post.id} className="forum-card">
+    <img
+      src={post.image ? post.image : '/assets/images/sinimagen.jpg'}
+      alt={post.title}
+      className="forum-img"
+    />
+    <div className="forum-content">
+      <h3>{post.title}</h3>
+      <p>{post.body}</p>
+      <div className="forum-footer">
+        <span>{post.date}</span>
+      </div>
+    </div>
+  </div>
+))}
+      
         {filteredTopics.map((topic) => (
           <div key={topic.id} className="forum-card">
-                       <img
-  src={topic.image ? topic.image : '/assets/images/sinimagen.jpg'}
-  alt={topic.title}
-  className="forum-img"
-/>
-
-
+            <img
+              src={topic.image ? topic.image : '/assets/images/sinimagen.jpg'}
+              alt={topic.title}
+              className="forum-img"
+            />
             <div className="forum-content">
               <h3>{topic.title}</h3>
               <p>{topic.content}</p>

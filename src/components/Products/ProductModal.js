@@ -1,116 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ProductModal.css';
 
-const ProductModal = ({ product, onClose, setNewProduct }) => {
-  if (!product) return null;
-
-  const esModoCrear = !!setNewProduct;
+const ProductModal = ({ onClose, onSubmit, product = {}, setNewProduct }) => {
+  const [isDonation, setIsDonation] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewProduct({ ...product, [name]: value });
+    setNewProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const data = {
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      description: product.description,
-      estado: product.estado,
-      serie: product.serie,
-      category: product.category,
-      longDescription: product.longDescription
-    };
-
-    try {
-      const response = await fetch('http://localhost:3001/api/articulos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert('Producto agregado correctamente');
-        onClose();
-      } else {
-        alert('Error al agregar producto: ' + result.error);
-      }
-    } catch (error) {
-      console.error('Error al enviar datos:', error);
-      alert('Error de conexión con el servidor.');
-    }
+  const handleToggleDonation = (value) => {
+    setIsDonation(value);
+    setNewProduct((prev) => ({ ...prev, price: value ? 0 : prev.price }));
   };
+
+  const countries = {
+    Colombia: ['Bogotá', 'Barranquilla', 'Medellín'],
+    Argentina: ['Buenos Aires', 'Córdoba', 'Rosario'],
+    México: ['CDMX', 'Guadalajara', 'Monterrey']
+  };
+
+  const countryOptions = Object.keys(countries);
+  const selectedCountry = product.country || 'Colombia';
+  const cityOptions = countries[selectedCountry] || [];
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay">
+      <div className="modal-form">
         <button className="close-btn" onClick={onClose}>✖</button>
 
-        {esModoCrear ? (
-          <form onSubmit={handleSubmit}>
-            <h2>Agregar Producto</h2>
-            <label>Nombre:
-              <input type="text" name="name" value={product.name} onChange={handleChange} />
-            </label>
-            <label>Precio:
-              <input type="number" name="price" value={product.price} onChange={handleChange} />
-            </label>
-            <label>Imagen URL:
-              <input type="text" name="image" value={product.image} onChange={handleChange} />
-            </label>
-            <label>Descripción:
-              <input type="text" name="description" value={product.description} onChange={handleChange} />
-            </label>
-            <label>Estado:
-              <input type="text" name="estado" value={product.estado} onChange={handleChange} />
-            </label>
-            <label>Serie:
-              <input type="text" name="serie" value={product.serie} onChange={handleChange} />
-            </label>
-            <label>Categoría:
-              <input type="text" name="category" value={product.category} onChange={handleChange} />
-            </label>
-            <label>Descripción larga:
-              <textarea name="longDescription" value={product.longDescription} onChange={handleChange} />
-            </label>
-            <button type="submit">Agregar Producto</button>
-          </form>
-        ) : (
-          <>
-            <div className="modal-left">
-              <img src={product.image} alt={product.name} />
-            </div>
-            <div className="modal-right">
-              <h2>{product.name}</h2>
-              <span className="tag">{product.price === 0 ? 'Donación' : 'Venta'}</span>
-              <h3>{product.price === 0 ? 'GRATIS' : `$${product.price.toLocaleString()}`}</h3>
-              <p>Descripción: {product.description || 'Sin descripción'}</p>
+        <div className="mode-switch">
+          <button
+            className={!isDonation ? 'active' : ''}
+            onClick={() => handleToggleDonation(false)}
+          >
+            Vender
+          </button>
+          <button
+            className={isDonation ? 'active' : ''}
+            onClick={() => handleToggleDonation(true)}
+          >
+            Donar
+          </button>
+        </div>
 
-              <div className="selectors">
-                <label>Estado:</label>
-                <span className="tagestado">{product.estado}</span>
+        <input
+          type="text"
+          name="image"
+          value={product.image || ''}
+          onChange={handleChange}
+          placeholder="URL de la imagen"
+        />
 
-                <label>Serie:</label>
-                <span className="tagestado">{product.serie}</span>
-              </div>
 
-              <button className="action-btn">Agregar al carrito</button>
+        <input
+          type="text"
+          name="name"
+          value={product.name || ''}
+          onChange={handleChange}
+          placeholder="Título..."
+        />
 
-              <details>
-                <summary>Descripción</summary>
-                <p>{product.longDescription || 'Aquí se puede ampliar más información del producto.'}</p>
-              </details>
-            </div>
-          </>
+        {!isDonation && (
+          <input
+            type="number"
+            name="price"
+            value={product.price || ''}
+            onChange={handleChange}
+            placeholder="Precio..."
+          />
         )}
+
+        <select name="category" value={product.category || ''} onChange={handleChange}>
+          <option value="">Categoría ...</option>
+          <option value="Ropa">Ropa</option>
+          <option value="Electrodomésticos">Electrodomésticos</option>
+          <option value="Celulares">Celulares</option>
+          <option value="Juguetes">Juguetes</option>
+        </select>
+
+        <select name="estado" value={product.estado || ''} onChange={handleChange}>
+          <option value="">Estado ...</option>
+          <option value="Nuevo">Nuevo</option>
+          <option value="Usado">Usado</option>
+        </select>
+
+        <textarea
+          name="description"
+          value={product.description || ''}
+          onChange={handleChange}
+          placeholder="Ingrese una descripción del producto..."
+        />
+
+        <input
+          type="text"
+          name="tags"
+          value={product.tags || ''}
+          onChange={handleChange}
+          placeholder="Etiquetas"
+        />
+
+        <select name="country" value={product.country || ''} onChange={handleChange}>
+          <option value="">Seleccione un país</option>
+          {countryOptions.map((country) => (
+            <option key={country} value={country}>{country}</option>
+          ))}
+        </select>
+
+        <select name="city" value={product.city || ''} onChange={handleChange}>
+          <option value="">Seleccione una ciudad</option>
+          {cityOptions.map((city) => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
+
+        <div className="location-display">
+           Ubicación: {product.city && product.country ? `${product.city}, ${product.country}` : 'No seleccionada'}
+        </div>
+
+        <button className="submit-btn" onClick={onSubmit}>Publicar</button>
       </div>
     </div>
   );
 };
 
 export default ProductModal;
+

@@ -92,4 +92,29 @@
   .filters ul.compact-list li:hover {
     color: #333;
     font-weight: bold;
+  }.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* para evitar que quede pegado en los bordes */
+    z-index: 999;
   }
+  
+  .modal-form {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh; /* importante */
+    overflow-y: auto; /* hace scroll vertical */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  

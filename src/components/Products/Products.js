@@ -86,6 +86,7 @@ const Products = () => {
       category: 'Ropa',
       longDescription: ''
     });
+    setSelectedProduct(null); //  Esto cierra el modal
   };
 
   const handleDeleteProduct = (id) => {
