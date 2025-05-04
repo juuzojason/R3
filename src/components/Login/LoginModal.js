@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './LoginModal.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, onLogin }) => {
+
   const navigate = useNavigate(); // 👈 AQUÍ adentro, no afuera del componente
 
   if (!isOpen) return null;
@@ -14,11 +15,11 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
 
   const handleLogin = () => {
-    // Aquí puedes validar usuario y contraseña si quieres
-    // Si todo sale bien:
-    onClose(); // Opcional, cierra el modal
-    navigate('/productos'); // 👈 Redirige a la nueva pestaña
+    onLogin(); // ✅ Cambia el estado a autenticado en App.js
+    onClose(); // ✅ Cierra el modal
+    navigate('/productos'); // ✅ Redirige
   };
+  
 
   return (
     <>
