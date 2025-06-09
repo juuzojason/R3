@@ -10,6 +10,7 @@ import LoginModal from './components/Login/LoginModal';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { FaShoppingCart, FaExchangeAlt, FaDonate, FaSearch, FaShareAlt } from 'react-icons/fa';
+import Topbar from './components/Topbar/Topbar';
 
 
 const Podras = () => (
@@ -98,46 +99,29 @@ const Reseñas = () => (
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <Router>
       <div className="App">
-        <nav className="navbar">
-        <div className="navbar-brand">
-          <Link to="/" className="brand-link">
-          <span className="brand-R3">Unete a R</span>
-          <span className="brand-Unete">3</span>
-          </Link>
-        </div>
-          <div className="navbar-buttons">
-          <Link to="/foros" className="btn-foros">
-            Foros
-          </Link>
+      <Topbar 
+  isAuthenticated={isAuthenticated}
+  onLoginClick={() => setIsLoginModalOpen(true)}
+  onRegisterClick={() => setIsRegisterModalOpen(true)}
+/>
+<LoginModal
+  isOpen={isLoginModalOpen}
+  onClose={() => setIsLoginModalOpen(false)}
+  onLogin={() => {
+    setIsAuthenticated(true);
+    setIsLoginModalOpen(false);
+  }}
+/>
 
-            <button 
-              className="btn-login" 
-              onClick={() => setIsLoginModalOpen(true)}
-            >
-              Iniciar Sesion
-            </button>
-            <button 
-              className="btn-join" 
-              onClick={() => setIsRegisterModalOpen(true)}
-            >
-              Unirse
-            </button>
-          </div>
-        </nav>
-
-        <LoginModal 
-          isOpen={isLoginModalOpen} 
-          onClose={() => setIsLoginModalOpen(false)}
-        />
-        <RegisterModal 
-          isOpen={isRegisterModalOpen} 
-          onClose={() => setIsRegisterModalOpen(false)}
-        />
-
+<RegisterModal
+  isOpen={isRegisterModalOpen}
+  onClose={() => setIsRegisterModalOpen(false)}
+/>
         <Routes>
           <Route path="/" element={
             <main className="main-content">
